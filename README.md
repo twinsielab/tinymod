@@ -6,5 +6,5 @@
 <p align="center">
   TwinsieLab - 2023<br>
   By Joe and Victor<br>
-  <h3 align="center" href="https://tinymod.xyz/tms">https://tinymod.xyz</h3>
+  <h1 align="center" href="https://tinymod.xyz/tms">https://tinymod.xyz</h1>
 </p>
