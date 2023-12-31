@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Label Generator</title>
+  
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Play:Regular,Bold,Italic&amp;display=swap" rel="stylesheet">
+    
+    <style>
+    
+    *{
+      box-sizing: border-box;
+    }
+    #content{
+      width: 384px;
+      height: 384px;
+      outline: 1px solid black;
+      padding: 32px;
+      padding-top: 5px;
+      
+                  font-family: Arial, sans-serif;
+                      font-family: "Play" !important;
+                        font-size: 32px;
+    }
+        #qrcode {
+            text-align: center;
+            margin-bottom: 0px;
+        }
+        #qrcode img {
+          display: inline-block !important;
+        }
+        #line {
+            display:flex;
+            justify-content: space-between;
+        }
+        #name {
+            text-align: left;
+            font-weight: bold;
+          
+        }
+         #sn{
+           text-align: right;
+
+         }
+        #outputImage {
+            border: 1px solid black;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <div id="qrcode"></div>
+        <div id="line">
+          <div id="name">Perry</div>
+          <div id="sn">TM-X0000</div>
+        </div>   
+    </div>
+
+    <button id="convert">Convert to PNG</button>
+    <br>
+    <img id="outputImage" />
+
+    <script>
+        // QR Code Generation
+        new QRCode(document.getElementById("qrcode"), {
+            text: "http://tinymod.xyz",
+            width: 320,
+            height: 320,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // Convert to PNG
+        document.getElementById('convert').addEventListener('click', function() {
+            var node = document.getElementById('content');
+
+            domtoimage.toPng(node)
+                .then(function (dataUrl) {
+                    var img = document.getElementById('outputImage');
+                    img.src = dataUrl;
+                })
+                .catch(function (error) {
+                    console.error('Error converting to image:', error);
+                });
+        });
+    </script>
+</body>
+</html>
