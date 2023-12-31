@@ -75,6 +75,8 @@
 
     <h1>TinyMod Label Generator</h1>
 
+    <button id="generate">Generate</button>
+
     <div id="content">
         <div id="qrcode"></div>
         <div id="line">
@@ -88,12 +90,12 @@
     <p>
         <img id="outputImage" />
         <br>
-        <button id="convert">Download PNG</button>
+        <button id="download">Download</button>
     </p>
 
     <script>
 
-        window.onload = async function () {
+        async function generate() {
 
             // Function to get query string parameters
             function getQueryParam(param) {
@@ -136,11 +138,18 @@
                 });
 
 
-            // Convert to PNG
-            document.getElementById('convert').addEventListener('click', function () {
+            
+
+        }
+
+        window.onload = function() {
+            generate();
+
+            document.getElementById('generate').addEventListener('click', generate);
+
+            document.getElementById('download').addEventListener('click', function () {
 
             });
-
         }
 
         function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
