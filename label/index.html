@@ -153,8 +153,14 @@
 
             document.getElementById('generate').addEventListener('click', generate);
 
-            document.getElementById('download').addEventListener('click', function () {
-
+            document.getElementById('download').addEventListener('click', function() {
+                var img = document.getElementById('outputImage');
+                if (img.src) {
+                    var link = document.createElement('a');
+                    link.download = `TinyMod - ${sn} - ${name}.png`;
+                    link.href = img.src;
+                    link.click();
+                }
             });
         }
 
