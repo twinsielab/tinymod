@@ -100,19 +100,19 @@
 
                     await nextFrame();
 
+                    // Convert DOM to Image
                     var node = document.getElementById('content');
-            
-                    domtoimage.toPng(node).then(function (dataUrl) {
+                    domtoimage.toPng(node).then(async function (dataUrl) {
                         var img = document.getElementById('outputImage');
                         img.src = dataUrl;
+
+                        await nextFrame();
+                        document.getElementById("content").style.display = 'none';
                     })
                     .catch(function (error) {
                         console.error('Error converting to image:', error);
                     });
 
-                    await nextFrame();
-
-                    document.getElementById("content").style.display = 'none';
             
                     // Convert to PNG
                     document.getElementById('convert').addEventListener('click', function() {
