@@ -21,10 +21,14 @@
             text-align: center;
         }
 
-        #content {
+
+        #wrapper {
             position: absolute;
             top: -1000px;
             left: -1000px;
+        }
+
+        #content {
             width: 384px;
             height: 384px;
 
@@ -77,11 +81,13 @@
 
     <button id="generate">Generate</button>
 
-    <div id="content">
-        <div id="qrcode"></div>
-        <div id="line">
-            <div id="name">Name</div>
-            <div id="sn">TM-0000</div>
+    <div id="wrapper">
+        <div id="content">
+            <div id="qrcode"></div>
+            <div id="line">
+                <div id="name">Name</div>
+                <div id="sn">TM-0000</div>
+            </div>
         </div>
     </div>
 
@@ -97,24 +103,24 @@
 
         async function generate() {
 
-            
+
             // Function to get query string parameters
             function getQueryParam(param) {
                 var queryParams = new URLSearchParams(window.location.search);
                 return queryParams.get(param);
             }
-            
+
             // Read parameters
             var name = getQueryParam('name') || 'Name';
             var sn = getQueryParam('sn') || 'TM-0000';
             var url = getQueryParam('url') || 'https://tinymod.xyz';
-            
+
             // Set the values in HTML
             document.getElementById('name').textContent = name;
             document.getElementById('sn').textContent = sn;
-            
+
             // QR Code Generation
-            document.getElementById("content").style.display = 'block';
+            document.getElementById("wrapper").style.display = 'block';
             document.getElementById("qrcode").innerHTML = '';
             new QRCode(document.getElementById("qrcode"), {
                 text: url,
@@ -134,18 +140,15 @@
                 img.src = dataUrl;
 
                 await nextFrame();
-                document.getElementById("content").style.display = 'none';
+                document.getElementById("wrapper").style.display = 'none';
             })
-            .catch(function (error) {
-                console.error('Error converting to image:', error);
-            });
-
-
-            
+                .catch(function (error) {
+                    console.error('Error converting to image:', error);
+                });
 
         }
 
-        window.onload = function() {
+        window.onload = function () {
             generate();
 
             document.getElementById('generate').addEventListener('click', generate);
