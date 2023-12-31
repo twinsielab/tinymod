@@ -1,56 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Label Generator</title>
-  
+    <title>TinyMod - Label Generator</title>
+
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Play:Regular,Bold,Italic&amp;display=swap" rel="stylesheet">
-    
+
     <style>
-    
-    *{
-      box-sizing: border-box;
-    }
-    #content{
-      width: 384px;
-      height: 384px;
-      outline: 1px solid black;
-      padding: 32px;
-      padding-top: 5px;
-      
-                  font-family: Arial, sans-serif;
-                      font-family: "Play" !important;
-                        font-size: 32px;
-    }
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-family: "Play" !important;
+        }
+
+        #content {
+            width: 384px;
+            height: 384px;
+            outline: 1px solid black;
+            padding: 32px;
+            padding-top: 5px;
+
+            font-family: Arial, sans-serif;
+            font-family: "Play" !important;
+            font-size: 32px;
+        }
+
         #qrcode {
             text-align: center;
             margin-bottom: 0px;
         }
+
         #qrcode img {
-          display: inline-block !important;
+            display: inline-block !important;
         }
+
         #line {
-            display:flex;
+            display: flex;
             justify-content: space-between;
         }
+
         #name {
             text-align: left;
             font-weight: bold;
-          
-        }
-         #sn{
-           text-align: right;
 
-         }
+        }
+
+        #sn {
+            text-align: right;
+
+        }
+
         #outputImage {
             border: 1px solid black;
             margin-top: 10px;
         }
     </style>
 </head>
+
 <body>
 
     <h1>TinyMod Label Generator</h1>
@@ -58,71 +71,74 @@
     <div id="content">
         <div id="qrcode"></div>
         <div id="line">
-          <div id="name">Perry</div>
-          <div id="sn">TM-X0000</div>
-        </div>   
+            <div id="name">Perry</div>
+            <div id="sn">TM-X0000</div>
+        </div>
     </div>
-    
+
     <br>
     
-    <img id="outputImage" />
-
-    <button id="convert">Download PNG</button>
+    <p>
+        <img id="outputImage" />
+        <br>
+        <button id="convert">Download PNG</button>
+    </p>
 
     <script>
 
-        window.onload = async function(){
-            
-                    // Function to get query string parameters
-                    function getQueryParam(param) {
-                        var queryParams = new URLSearchParams(window.location.search);
-                        return queryParams.get(param);
-                    }
-            
-                    // Read parameters
-                    var name = getQueryParam('name') || 'Name';
-                    var sn = getQueryParam('sn') || 'TM-0000';
-                    var url = getQueryParam('url') || 'https://tinymod.xyz';
-            
-                    // Set the values in HTML
-                    document.getElementById('name').textContent = name;
-                    document.getElementById('sn').textContent = sn;
-                    
-                    // QR Code Generation
-                    new QRCode(document.getElementById("qrcode"), {
-                        text: url,
-                        width: 320,
-                        height: 320,
-                        colorDark: "#000000",
-                        colorLight: "#ffffff",
-                        correctLevel: QRCode.CorrectLevel.L
-                    });
+        window.onload = async function () {
 
-                    await nextFrame();
+            // Function to get query string parameters
+            function getQueryParam(param) {
+                var queryParams = new URLSearchParams(window.location.search);
+                return queryParams.get(param);
+            }
 
-                    // Convert DOM to Image
-                    var node = document.getElementById('content');
-                    domtoimage.toPng(node).then(async function (dataUrl) {
-                        var img = document.getElementById('outputImage');
-                        img.src = dataUrl;
+            // Read parameters
+            var name = getQueryParam('name') || 'Name';
+            var sn = getQueryParam('sn') || 'TM-0000';
+            var url = getQueryParam('url') || 'https://tinymod.xyz';
 
-                        await nextFrame();
-                        document.getElementById("content").style.display = 'none';
-                    })
-                    .catch(function (error) {
-                        console.error('Error converting to image:', error);
-                    });
+            // Set the values in HTML
+            document.getElementById('name').textContent = name;
+            document.getElementById('sn').textContent = sn;
 
-            
-                    // Convert to PNG
-                    document.getElementById('convert').addEventListener('click', function() {
-                        
-                    });
+            // QR Code Generation
+            new QRCode(document.getElementById("qrcode"), {
+                text: url,
+                width: 320,
+                height: 320,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.L
+            });
+
+            await nextFrame();
+
+            // Convert DOM to Image
+            var node = document.getElementById('content');
+            domtoimage.toPng(node).then(async function (dataUrl) {
+                var img = document.getElementById('outputImage');
+                img.src = dataUrl;
+
+                await nextFrame();
+                document.getElementById("content").style.display = 'none';
+            })
+                .catch(function (error) {
+                    console.error('Error converting to image:', error);
+                });
+
+
+            // Convert to PNG
+            document.getElementById('convert').addEventListener('click', function () {
+
+            });
 
         }
 
-        function delay (ms) { return new Promise(r=>setTimeout(r, ms)); }
-        function nextFrame () { return new Promise(r=>requestAnimationFrame(r)); }
+        function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+        function nextFrame() { return new Promise(r => requestAnimationFrame(r)); }
     </script>
 </body>
+
 </html>
