@@ -68,7 +68,7 @@
 
     <script>
 
-        window.onload = function(){
+        window.onload = async function(){
             
                     // Function to get query string parameters
                     function getQueryParam(param) {
@@ -84,8 +84,6 @@
                     // Set the values in HTML
                     document.getElementById('name').textContent = name;
                     document.getElementById('sn').textContent = sn;
-            
-            
                     
                     // QR Code Generation
                     new QRCode(document.getElementById("qrcode"), {
@@ -97,6 +95,7 @@
                         correctLevel: QRCode.CorrectLevel.L
                     });
 
+                    await nextFrame();
 
                     var node = document.getElementById('content');
             
@@ -108,7 +107,9 @@
                         console.error('Error converting to image:', error);
                     });
 
-                    document.getElementById("qrcode").style.display = 'none';
+                    await nextFrame();
+
+                    document.getElementById("content").style.display = 'none';
             
                     // Convert to PNG
                     document.getElementById('convert').addEventListener('click', function() {
@@ -116,6 +117,9 @@
                     });
 
         }
+
+        function delay (ms) { return new Promise(r=>setTimeout(r, ms)); }
+        function nextFrame () { return new Promise(r=>requestAnimationFrame(r)); }
     </script>
 </body>
 </html>
