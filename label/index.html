@@ -25,11 +25,11 @@
             position: absolute;
             top: -1000px;
             left: -1000px;
+            width: 384px;
+            height: 384px;
 
             background: #FFFFFF;
 
-            width: 384px;
-            height: 384px;
             outline: 1px solid black;
             padding: 32px;
             padding-top: 5px;
@@ -80,8 +80,8 @@
     <div id="content">
         <div id="qrcode"></div>
         <div id="line">
-            <div id="name">Perry</div>
-            <div id="sn">TM-X0000</div>
+            <div id="name">Name</div>
+            <div id="sn">TM-0000</div>
         </div>
     </div>
 
@@ -97,22 +97,25 @@
 
         async function generate() {
 
+            
             // Function to get query string parameters
             function getQueryParam(param) {
                 var queryParams = new URLSearchParams(window.location.search);
                 return queryParams.get(param);
             }
-
+            
             // Read parameters
             var name = getQueryParam('name') || 'Name';
             var sn = getQueryParam('sn') || 'TM-0000';
             var url = getQueryParam('url') || 'https://tinymod.xyz';
-
+            
             // Set the values in HTML
             document.getElementById('name').textContent = name;
             document.getElementById('sn').textContent = sn;
-
+            
             // QR Code Generation
+            document.getElementById("content").style.display = 'block';
+            document.getElementById("qrcode").innerHTML = '';
             new QRCode(document.getElementById("qrcode"), {
                 text: url,
                 width: 320,
@@ -133,9 +136,9 @@
                 await nextFrame();
                 document.getElementById("content").style.display = 'none';
             })
-                .catch(function (error) {
-                    console.error('Error converting to image:', error);
-                });
+            .catch(function (error) {
+                console.error('Error converting to image:', error);
+            });
 
 
             
