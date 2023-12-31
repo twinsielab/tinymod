@@ -65,6 +65,24 @@
     <img id="outputImage" />
 
     <script>
+
+         // Function to get query string parameters
+        function getQueryParam(param) {
+            var queryParams = new URLSearchParams(window.location.search);
+            return queryParams.get(param);
+        }
+
+        // Read parameters
+        var name = getQueryParam('name') || 'Name';
+        var sn = getQueryParam('sn') || 'TM-X0000';
+        var url = getQueryParam('url') || 'https://tinymod.xyz';
+
+        // Set the values in HTML
+        document.getElementById('name').textContent = name;
+        document.getElementById('sn').textContent = sn;
+
+
+        
         // QR Code Generation
         new QRCode(document.getElementById("qrcode"), {
             text: "http://tinymod.xyz",
