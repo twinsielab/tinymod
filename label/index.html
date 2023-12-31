@@ -79,8 +79,6 @@
 
     <h1>TinyMod Label Generator</h1>
 
-    <button id="generate">Generate</button>
-
     <div id="wrapper">
         <div id="content">
             <div id="qrcode"></div>
@@ -143,6 +141,7 @@
                 img.src = dataUrl;
 
                 await nextFrame();
+                
                 document.getElementById("wrapper").style.display = 'none';
             })
                 .catch(function (error) {
@@ -153,8 +152,6 @@
 
         window.onload = function () {
             generate();
-
-            document.getElementById('generate').addEventListener('click', generate);
 
             document.getElementById('download').addEventListener('click', function() {
                 var img = document.getElementById('outputImage');
