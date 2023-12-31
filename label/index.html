@@ -60,52 +60,62 @@
         </div>   
     </div>
 
-    <button id="convert">Convert to PNG</button>
+    <button id="convert">Download PNG</button>
+
     <br>
+    
     <img id="outputImage" />
 
     <script>
 
-         // Function to get query string parameters
-        function getQueryParam(param) {
-            var queryParams = new URLSearchParams(window.location.search);
-            return queryParams.get(param);
+        window.onload = function(){
+            
+                    // Function to get query string parameters
+                    function getQueryParam(param) {
+                        var queryParams = new URLSearchParams(window.location.search);
+                        return queryParams.get(param);
+                    }
+            
+                    // Read parameters
+                    var name = getQueryParam('name') || 'Name';
+                    var sn = getQueryParam('sn') || 'TM-X0000';
+                    var url = getQueryParam('url') || 'https://tinymod.xyz';
+            
+                    // Set the values in HTML
+                    document.getElementById('name').textContent = name;
+                    document.getElementById('sn').textContent = sn;
+            
+            
+                    
+                    // QR Code Generation
+                    new QRCode(document.getElementById("qrcode"), {
+                        text: url,
+                        width: 320,
+                        height: 320,
+                        colorDark: "#000000",
+                        colorLight: "#ffffff",
+                        correctLevel: QRCode.CorrectLevel.L
+                    });
+
+
+                    var node = document.getElementById('content');
+            
+                    domtoimage.toPng(node).then(function (dataUrl) {
+                        var img = document.getElementById('outputImage');
+                        img.src = dataUrl;
+                    })
+                    .catch(function (error) {
+                        console.error('Error converting to image:', error);
+                    });
+
+                    document.getElementById("qrcode").style.display = 'none';
+            
+                    // Convert to PNG
+                    document.getElementById('convert').addEventListener('click', function() {
+                        
+                    });
+
         }
-
-        // Read parameters
-        var name = getQueryParam('name') || 'Name';
-        var sn = getQueryParam('sn') || 'TM-X0000';
-        var url = getQueryParam('url') || 'https://tinymod.xyz';
-
-        // Set the values in HTML
-        document.getElementById('name').textContent = name;
-        document.getElementById('sn').textContent = sn;
-
-
-        
-        // QR Code Generation
-        new QRCode(document.getElementById("qrcode"), {
-            text: url,
-            width: 320,
-            height: 320,
-            colorDark: "#000000",
-            colorLight: "#ffffff",
-            correctLevel: QRCode.CorrectLevel.H
-        });
-
-        // Convert to PNG
-        document.getElementById('convert').addEventListener('click', function() {
-            var node = document.getElementById('content');
-
-            domtoimage.toPng(node)
-                .then(function (dataUrl) {
-                    var img = document.getElementById('outputImage');
-                    img.src = dataUrl;
-                })
-                .catch(function (error) {
-                    console.error('Error converting to image:', error);
-                });
-        });
     </script>
 </body>
 </html>
